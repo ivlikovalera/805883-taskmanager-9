@@ -1,5 +1,3 @@
-'use strict';
-
 const CARD_COUNT = 3;
 const pageApplication = document.querySelector(`.main`);
 const controlContainer = document.querySelector(`.main__control`);
