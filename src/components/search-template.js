@@ -1,4 +1,4 @@
-export const getSearchComponent = () =>
+export const getSearchTemplate = () =>
   `<section class="main__search search container">
     <input
       type="text"

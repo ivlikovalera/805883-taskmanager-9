@@ -1,4 +1,4 @@
-export const getTaskComponent = () =>
+export const getTaskTemplate = () =>
   `<article class="card card--blue">
     <div class="card__form">
       <div class="card__inner">

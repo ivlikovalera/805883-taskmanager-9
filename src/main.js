@@ -1,25 +1,31 @@
-import {getMenuComponent} from './components/menu.js';
-import {getSearchComponent} from './components/search.js';
-import {getFilterComponent} from './components/filter.js';
-import {getTaskComponent} from './components/task.js';
-import {getFormComponent} from './components/form.js';
-import {getButtonLoadMoreComponent} from './components/load-more-button.js';
-import {getSortComponent} from './components/sorting.js';
+import {getMenuTemplate} from './components/menu-template.js';
+import {getSearchTemplate} from './components/search-template.js';
+import {getFilterTemplate} from './components/filter-template.js';
+import {getTaskTemplate} from './components/task-template.js';
+import {getFormTemplate} from './components/form-template.js';
+import {getBoardContainerTemplate} from './components/board-container-template.js';
+import {getButtonLoadMoreTemplate} from './components/load-more-button-template.js';
+import {getSortTemplate} from './components/sorting-template.js';
 
 const CARD_COUNT = 3;
 const pageApplication = document.querySelector(`.main`);
 const controlContainer = document.querySelector(`.main__control`);
 
-const renderComponent = (container, component) => {
-  container.insertAdjacentHTML(`beforeEnd`, component);
+const renderTemplate = (container, place, Template) => {
+  container.insertAdjacentHTML(place, Template);
 };
 
-renderComponent(pageApplication, getFormComponent());
-renderComponent(pageApplication, getSearchComponent());
-renderComponent(pageApplication, getFilterComponent());
-renderComponent(pageApplication, getSortComponent());
+renderTemplate(pageApplication, `beforeEnd`, getSearchTemplate());
+renderTemplate(pageApplication, `beforeEnd`, getFilterTemplate());
+
+renderTemplate(pageApplication, `beforeEnd`, getBoardContainerTemplate());
+const board = pageApplication.querySelector(`.board`);
+renderTemplate(board, `afterBegin`, getSortTemplate());
+const boardTasks = board.querySelector(`.board__tasks`);
+renderTemplate(boardTasks, `afterBegin`, getFormTemplate());
 for (let i = 0; i < CARD_COUNT; i++) {
-  renderComponent(pageApplication, getTaskComponent());
+  renderTemplate(boardTasks, `beforeEnd`, getTaskTemplate());
 }
-renderComponent(pageApplication, getButtonLoadMoreComponent());
-renderComponent(controlContainer, getMenuComponent());
+
+renderTemplate(board, `beforeEnd`, getButtonLoadMoreTemplate());
+renderTemplate(controlContainer, `beforeEnd`, getMenuTemplate());

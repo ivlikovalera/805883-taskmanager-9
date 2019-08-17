@@ -1,4 +1,4 @@
-export const getFilterComponent = () =>
+export const getFilterTemplate = () =>
   `<section class="main__filter filter container">
     <input
       type="radio"
