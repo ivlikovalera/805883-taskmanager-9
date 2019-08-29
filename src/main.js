@@ -6,8 +6,13 @@ import {getFormTemplate} from './components/form-template.js';
 import {getBoardContainerTemplate} from './components/board-container-template.js';
 import {getButtonLoadMoreTemplate} from './components/load-more-button-template.js';
 import {getSortTemplate} from './components/sorting-template.js';
-
-const CARD_COUNT = 3;
+import {getTask} from './data.js';
+import {getFilter} from './data-filter.js';
+const TASK_COUNT = 3;
+const Position = {
+  BEFOREEND: `beforeEnd`,
+  AFTERBEGIN: `afterBegin`,
+};
 const pageApplication = document.querySelector(`.main`);
 const controlContainer = document.querySelector(`.main__control`);
 
@@ -15,17 +20,27 @@ const renderTemplate = (container, place, Template) => {
   container.insertAdjacentHTML(place, Template);
 };
 
-renderTemplate(pageApplication, `beforeEnd`, getSearchTemplate());
-renderTemplate(pageApplication, `beforeEnd`, getFilterTemplate());
+renderTemplate(pageApplication, Position.BEFOREEND, getSearchTemplate());
+const renderFilter = (container, filters) => {
+  container.insertAdjacentHTML(Position.BEFOREEND, new Array(filters).fill(``).map(getFilterTemplate).join(``));
+};
+renderFilter(pageApplication, getFilter());
 
-renderTemplate(pageApplication, `beforeEnd`, getBoardContainerTemplate());
+renderTemplate(pageApplication, Position.BEFOREEND, getBoardContainerTemplate());
 const board = pageApplication.querySelector(`.board`);
-renderTemplate(board, `afterBegin`, getSortTemplate());
+renderTemplate(board, Position.AFTERBEGIN, getSortTemplate());
 const boardTasks = board.querySelector(`.board__tasks`);
-renderTemplate(boardTasks, `afterBegin`, getFormTemplate());
-for (let i = 0; i < CARD_COUNT; i++) {
-  renderTemplate(boardTasks, `beforeEnd`, getTaskTemplate());
-}
+renderTemplate(boardTasks, Position.AFTERBEGIN, getFormTemplate());
 
-renderTemplate(board, `beforeEnd`, getButtonLoadMoreTemplate());
-renderTemplate(controlContainer, `beforeEnd`, getMenuTemplate());
+const renderTasks = (container, count) => {
+  container.insertAdjacentHTML(Position.BEFOREEND, new Array(count)
+    .fill(``)
+    .map(getTask)
+    .map(getTaskTemplate)
+    .join(``));
+};
+
+renderTasks(boardTasks, TASK_COUNT);
+
+renderTemplate(board, Position.BEFOREEND, getButtonLoadMoreTemplate());
+renderTemplate(controlContainer, Position.BEFOREEND, getMenuTemplate());
