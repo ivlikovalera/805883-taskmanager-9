@@ -1,3 +1,5 @@
+import {TaskCount} from './utils.js';
+
 export const getTask = () => ({
   description: [
     `Изучить теорию`,
@@ -7,13 +9,13 @@ export const getTask = () => ({
   dueDate: Date.now() + (Math.floor(Math.random() * 15)
   - 7) * 24 * 60 * 60 * 1000,
   repeatingDays: {
-    'Mo': false,
-    'Tu': false,
-    'We': Boolean(Math.round(Math.random())),
-    'Th': false,
-    'Fr': false,
-    'Sa': false,
-    'Su': false,
+    'mo': false,
+    'tu': false,
+    'we': Boolean(Math.round(Math.random())),
+    'th': false,
+    'fr': false,
+    'sa': false,
+    'su': false,
   },
   tags: new Set([
     `homework`,
@@ -29,6 +31,14 @@ export const getTask = () => ({
     `green`,
     `pink`,
   ][Math.floor(Math.random() * 5)],
-  isFavorite: false,
-  isArchive: false,
+  isFavorite: Boolean(Math.round(Math.random())),
+  isArchive: Boolean(Math.round(Math.random())),
 });
+
+export const getAllTasks = (count) => {
+  return new Array(count)
+  .fill(``)
+  .map(getTask);
+};
+
+export const tasks = getAllTasks(TaskCount.all).slice();
